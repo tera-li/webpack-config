@@ -4,7 +4,7 @@
   "description": "练习",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",  
+    "dev": "webpack-dev-server --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:prod": "webpack --mode=production",
     "build:dev": "webpack --mode=development"
