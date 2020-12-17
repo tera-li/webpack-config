@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/Surprise-ling/project#readme",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
     "css-loader": "^3.5.2",
     "html-webpack-plugin": "^4.2.0",
     "style-loader": "^1.1.4",

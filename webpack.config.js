@@ -1,5 +1,5 @@
 const htmlWebpackPlugin = require('html-webpack-plugin')
-// 配置index.html页面的入口，自动唉内存中根据指定页面生成一个内存页面
+// 配置index.html页面的入口，自动在内存中根据指定页面生成一个内存页面
 // 自动把打包好的index.js追加到html中
 module.exports = {
     entry:__dirname+'/src/index.js', // 打包文件入口路径
@@ -12,7 +12,20 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader','css-loader']
-            }
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: [
+                      ['@babel/preset-env', { targets: "defaults" }]
+                    ],
+                    plugins: ['@babel/plugin-transform-runtime']
+                  }
+                }
+              }
         ]
     },
     plugins: [
@@ -23,7 +36,13 @@ module.exports = {
     ],
     devServer: { // webpack-dev-server配置
         proxy: { // 代理
-            '/api': 'http://localhost:3000'
+            '/api': {
+                target: 'http://localhost:3000',
+                secure: false,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
         },
         // host: '0.0.0.0', // 可以让同一个ip地址的其他电脑或手机访问
         open: true, // 启动时自动打开浏览器
