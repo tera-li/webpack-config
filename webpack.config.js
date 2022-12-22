@@ -1,55 +1,49 @@
-const htmlWebpackPlugin = require('html-webpack-plugin')
 // 配置index.html页面的入口，自动在内存中根据指定页面生成一个内存页面
 // 自动把打包好的index.js追加到html中
+const htmlWebpackPlugin = require("html-webpack-plugin");
+
 module.exports = {
-    entry:__dirname+'/src/index.js', // 打包文件入口路径
-    output:{
-        path:__dirname+'/dist', // 打包名称
-        filename:'./index.js'   // 文件名
-    },
-    module:{
-        rules:[  // 依赖包处理，比如对css，image，json转成js
-            {
-                test: /\.css$/,
-                use: ['style-loader','css-loader']
-            },
-            {
-                test: /\.m?js$/,
-                exclude: /node_modules/,
-                use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: [
-                      ['@babel/preset-env', { targets: "defaults" }]
-                    ],
-                    plugins: ['@babel/plugin-transform-runtime']
-                  }
-                }
-              }
-        ]
-    },
-    plugins: [
-        new htmlWebpackPlugin({ // 配置插件节点
-            template: __dirname+'/src/index.html',  // 指定模板页面的路径，根据指定页面路径，去生成内存中的页面
-            filename: 'index.html'
-        })
+  // 入口，指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始
+  entry: __dirname + "/src/index.js",
+  // 输出，告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件
+  output: {
+    // 打包输出路径
+    path: __dirname + "/dist",
+    // 文件名
+    filename: "[id].js",
+    clean: true,
+  },
+  module: {
+    rules: [
+      // webpack 只能理解 JavaScript 和 JSON 文件，loader将处理import,require等其它的类型文件，比如对Css,Image,Ts转成 JavaScript
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.ts$/,
+        use: ["ts-loader"],
+      },
     ],
-    devServer: { // webpack-dev-server配置
-        proxy: { // 代理
-            '/api': {
-                target: 'http://localhost:3000',
-                secure: false,
-                pathRewrite: {
-                    '^/api': ''
-                }
-            }
-        },
-        // host: '0.0.0.0', // 可以让同一个ip地址的其他电脑或手机访问
-        open: true, // 启动时自动打开浏览器
-        port: 9000, // 端口
-        hot: true, // 启用热更新，在不刷新的情况下替换css样式
-        inline: true, // 内联模式
-        https: true, // 可以选择https提供服务
-        contentBase: 'src' // 指定托管的根目录
-    }
-}
+  },
+  plugins: [
+    // new htmlWebpackPlugin({
+    //   // 配置插件节点
+    //   template: __dirname + "/src/index.html", // 指定模板页面的路径，根据指定页面路径，去生成内存中的页面
+    //   filename: "index.html",
+    // }),
+  ],
+  devServer: {
+    // webpack-dev-server配置
+    // proxy: {
+    //   // 代理
+    //   "/api": {
+    //     target: "http://localhost:3000",
+    //     secure: false,
+    //     pathRewrite: {
+    //       "^/api": "",
+    //     },
+    //   },
+    // },
+  },
+};
