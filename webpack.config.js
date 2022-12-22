@@ -21,20 +21,35 @@ module.exports = {
       // 原始文件 -> loader 编译,代码转换 -> loader 处理完成后的结果,交给 webpack进行打包 -> 输出最终文件
       {
         test: /\.css$/,
+        // 从后向前处理，处理完成后交由 webpack打包合并到 bundle.js中
         use: ["style-loader", "css-loader"],
       },
       {
         test: /\.ts$/,
         use: ["ts-loader"],
       },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+            // 缓存babel-loader 的执行结果
+            // 之后的 webpack 构建，将会尝试读取缓存，来避免在每次执行时，可能产生的、高性能消耗的 Babel 重新编译过程(recompilation process)
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
     ],
   },
+  // 扩展 webpack 功能，打包优化，资源管理，注入环境变量
   plugins: [
-    // new htmlWebpackPlugin({
-    //   // 配置插件节点
-    //   template: __dirname + "/src/index.html", // 指定模板页面的路径，根据指定页面路径，去生成内存中的页面
-    //   filename: "index.html",
-    // }),
+    // 生成一个 HTML5 文件， 在 body 中使用 script 标签引入你所有 webpack 生成的 bundle
+    new htmlWebpackPlugin({
+      template: __dirname + "/public/index.html",
+      filename: "index.html",
+    }),
   ],
   devServer: {
     // webpack-dev-server配置

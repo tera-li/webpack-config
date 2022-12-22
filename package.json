@@ -4,7 +4,7 @@
   "description": "练习",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --mode=dev",
+    "dev": "webpack-dev-server --progress --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:prod": "webpack --mode=production",
     "build:dev": "webpack --mode=development"
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/Surprise-ling/project#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
