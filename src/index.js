@@ -1,4 +1,4 @@
-import "./assests/style.css";
+import "@/assets/style.css";
 import { defaults } from "./default/transform.js";
 import { defaultsTs, defaultsTsArrow } from "./default/transform.ts";
 

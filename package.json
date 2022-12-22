@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:prod": "webpack --mode=production",
-    "build:dev": "webpack --mode=development"
+    "build:prod": "webpack --mode=production --node-env production",
+    "build:dev": "webpack --mode=development --node-env development"
   },
   "repository": {
     "type": "git",

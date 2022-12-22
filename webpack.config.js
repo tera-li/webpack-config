@@ -3,14 +3,18 @@
 const htmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  mode: process.env.NODE_ENV,
   // 入口，指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始
-  entry: __dirname + "/src/index.js",
+  entry: {
+    main: __dirname + "/src/index.js",
+    two_entry: __dirname + "/src/two-entry.js",
+  },
   // 输出，告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件
   output: {
     // 打包输出路径
     path: __dirname + "/dist",
     // 文件名
-    filename: "[id].js",
+    filename: "[contenthash].js",
     // 在生成文件之前清空 output 目录
     clean: true,
   },
@@ -51,17 +55,24 @@ module.exports = {
       filename: "index.html",
     }),
   ],
-  devServer: {
-    // webpack-dev-server配置
-    // proxy: {
-    //   // 代理
-    //   "/api": {
-    //     target: "http://localhost:3000",
-    //     secure: false,
-    //     pathRewrite: {
-    //       "^/api": "",
-    //     },
-    //   },
-    // },
+  // 配置模块如何解析
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
   },
+  // 开发工具
+  devtool: process.env.NODE_ENV === "development" ? "source-map" : false,
+  // 开发服务配置
+  devServer: {
+    host: "localhost", // 启动服务器域名
+    port: "3000", // 启动服务器端口号
+    open: true, // 是否自动打开浏览器
+    hot: true, // 开启HMR功能
+    http2: true,
+    https: false,
+  },
+  // optimization: {
+  //   minimize: false,
+  // },
 };
