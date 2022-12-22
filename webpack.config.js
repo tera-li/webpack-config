@@ -11,11 +11,14 @@ module.exports = {
     path: __dirname + "/dist",
     // 文件名
     filename: "[id].js",
+    // 在生成文件之前清空 output 目录
     clean: true,
   },
   module: {
     rules: [
-      // webpack 只能理解 JavaScript 和 JSON 文件，loader将处理import,require等其它的类型文件，比如对Css,Image,Ts转成 JavaScript
+      // webpack 只能理解 JavaScript 和 JSON 文件
+      // loader将处理import,require等其它的类型文件，比如对.css,Image,.ts转换成 Webpack能够识别的方式
+      // 原始文件 -> loader 编译,代码转换 -> loader 处理完成后的结果,交给 webpack进行打包 -> 输出最终文件
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
