@@ -4,7 +4,8 @@
         "target": "ES5",
         "noImplicitAny": true,
         "removeComments": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "allowJs": true
     },
 }
   
