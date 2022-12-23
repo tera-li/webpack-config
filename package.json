@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:prod": "webpack --mode=production --node-env production",
-    "build:dev": "webpack --mode=development --node-env development"
+    "build:prod": "webpack --mode=production --node-env production --progress",
+    "build:dev": "webpack --mode=development --node-env development --progress"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,7 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vue": "^3.2.45"
+  }
 }

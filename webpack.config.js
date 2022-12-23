@@ -14,7 +14,7 @@ module.exports = {
     // 打包输出路径
     path: __dirname + "/dist",
     // 文件名
-    filename: "[contenthash].js",
+    filename: "js/[contenthash].js",
     // 在生成文件之前清空 output 目录
     clean: true,
   },
@@ -71,6 +71,12 @@ module.exports = {
     hot: true, // 开启HMR功能
     http2: true,
     https: false,
+  },
+  // 从输出的 bundle 中排除依赖
+  // 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖
+  // 例如，从 CDN 引入 Vue，而不是把它打包：
+  externals: {
+    vue: "Vue",
   },
   // optimization: {
   //   minimize: false,

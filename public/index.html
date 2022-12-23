@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script defer src="https://unpkg.com/vue@3.2.45/dist/vue.global.prod.js"></script>
   </head>
   <body>
     <h1>webpack 打包配置</h1>
+    <div id="app">
+      <button @click="count++">{{ count }}</button>
+    </div>
   </body>
 </html>
