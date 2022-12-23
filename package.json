@@ -1,24 +1,23 @@
 {
   "name": "surprise",
   "version": "1.0.0",
-  "description": "练习",
-  "main": "index.js",
+  "description": "webpack-config",
+  "main": "/src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --progress --mode=development --node-env development",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:prod": "webpack --mode=production --node-env production --progress",
     "build:dev": "webpack --mode=development --node-env development --progress"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Surprise-ling/project.git"
+    "url": "git+https://github.com/hljinjiang/webpack-config.git"
   },
   "author": "surprise",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Surprise-ling/project/issues"
+    "url": "https://github.com/hljinjiang/webpack-config/issues"
   },
-  "homepage": "https://github.com/Surprise-ling/project#readme",
+  "homepage": "https://github.com/hljinjiang/webpack-config#readme",
   "devDependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
