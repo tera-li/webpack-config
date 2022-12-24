@@ -38,7 +38,7 @@ module.exports = {
       // 解析.js
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
@@ -67,9 +67,12 @@ module.exports = {
   ],
   // 配置模块如何解析
   resolve: {
+    // 别名
     alias: {
       "@": "/src",
     },
+    // 尝试按顺序解析这些后缀名，引入文件就可以不带后缀
+    extensions: [".js", ".json", ".vue"],
   },
   // 开发工具
   devtool: process.env.NODE_ENV === "development" ? "source-map" : false,
