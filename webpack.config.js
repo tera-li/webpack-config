@@ -54,6 +54,11 @@ module.exports = {
         test: /\.vue$/,
         use: ["vue-loader"],
       },
+      // 解析 .custom 自定义文件
+      {
+        test: /\.custom$/,
+        use: ["./loaders/custom-loader.js"],
+      },
     ],
   },
   // 扩展 webpack 功能，打包优化，资源管理，注入环境变量
