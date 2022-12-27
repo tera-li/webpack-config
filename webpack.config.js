@@ -2,6 +2,7 @@
 // 自动把打包好的 bundle 追加到html中
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
+const CustomPlugin = require("./plugins/custom-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -69,6 +70,8 @@ module.exports = {
       filename: "index.html",
     }),
     new VueLoaderPlugin(),
+    // 自定义plugin，压缩代码
+    new CustomPlugin(),
   ],
   // 配置模块如何解析
   resolve: {

@@ -4,7 +4,7 @@
   "description": "webpack-config",
   "main": "/src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --mode=development --node-env development",
+    "dev": "webpack serve --mode=development --node-env development --progress",
     "build:prod": "webpack --mode=production --node-env production --progress",
     "build:dev": "webpack --mode=development --node-env development --progress"
   },
@@ -24,6 +24,7 @@
     "babel-loader": "^9.1.0",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
+    "jszip": "^3.10.1",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
