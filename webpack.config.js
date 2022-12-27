@@ -1,5 +1,5 @@
 // 配置index.html页面的入口，自动在内存中根据指定页面生成一个内存页面
-// 自动把打包好的index.js追加到html中
+// 自动把打包好的 bundle 追加到html中
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
 
@@ -24,7 +24,7 @@ module.exports = {
     rules: [
       // webpack 只能理解 JavaScript 和 JSON 文件
       // loader将处理import,require等其它的类型文件，比如对.css,Image,.ts转换成 Webpack能够识别的方式
-      // 原始文件 -> loader 编译,代码转换 -> loader 处理完成后的结果,交给 webpack进行打包 -> 输出最终文件
+      // 原始文件 -> 匹配rule,loader 编译,代码转换 -> loader 处理完成后的结果,交给 webpack进行打包 -> 输出最终文件 bundle.js
       {
         test: /\.css$/,
         // 从后向前处理，处理完成后交由 webpack打包合并到 bundle.js中
