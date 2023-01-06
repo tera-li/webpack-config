@@ -19,7 +19,7 @@ class CustomPlugin {
       }
     });
   }
-  readDir(obj, nowPath) {
+  readDir(obj, nowPath, argFileName) {
     // 读取目录中的所有文件及文件夹（同步操作）
     let files = fs.readdirSync(nowPath);
     files.forEach((fileName, index) => {
@@ -28,10 +28,12 @@ class CustomPlugin {
       let file = fs.statSync(fillPath);
       // 如果是目录的话，继续查询
       if (file.isDirectory()) {
+        // 如果是目录下的目录则拼接资源目录
+        fileName = argFileName ? argFileName + "/" + fileName : fileName;
         // 压缩对象中生成该目录
         let dirList = this.zip.folder(fileName);
         // 重新检索目录文件
-        this.readDir(dirList, fillPath);
+        this.readDir(dirList, fillPath, fileName);
       } else {
         // 压缩目录添加文件
         obj.file(fileName, fs.readFileSync(fillPath));
