@@ -2,7 +2,8 @@
 // 自动把打包好的 bundle 追加到html中
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
-const CustomPlugin = require("./plugins/custom-plugin");
+// const CustomPlugin = require("./plugins/custom-plugin");
+const CustomPlugin = require("dir-to-zip");
 
 module.exports = {
   mode: process.env.NODE_ENV,
