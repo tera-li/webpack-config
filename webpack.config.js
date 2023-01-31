@@ -3,7 +3,7 @@
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
 // const CustomPlugin = require("./plugins/custom-plugin");
-const CustomPlugin = require("dir-to-zip");
+const dirToZip = require("dir-to-zip");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -72,7 +72,7 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     // 自定义plugin，压缩代码
-    new CustomPlugin(),
+    new dirToZip(),
   ],
   // 配置模块如何解析
   resolve: {
