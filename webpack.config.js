@@ -2,8 +2,12 @@
 // 自动把打包好的 bundle 追加到html中
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 // const CustomPlugin = require("./plugins/custom-plugin");
-const dirToZip = require("dir-to-zip");
+
+// 定义压缩文件类型
+const productionGzipExtensions = ["js", "css"];
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -22,6 +26,17 @@ module.exports = {
     // 在生成文件之前清空 output 目录
     clean: true,
   },
+  cache: false,
+  // 分包的最小单位是module
+  optimization: {
+    splitChunks: {
+      chunks: "all", //默认为async，可选all或者initial
+      maxSize: 3 * 1024, //控制包的最大字节数
+      automaticNameDelimiter: ".", //新chunk名称的分隔符，默认为～
+      minChunks: 1, //一个模块被多少个chunk使用时才会进行分包，默认为1
+      minSize: 3 * 1024, //单位为字节，当分包达到多少字节后才允许被真正地拆包，默认为30000
+    },
+  },
   module: {
     rules: [
       // webpack 只能理解 JavaScript 和 JSON 文件
@@ -29,18 +44,23 @@ module.exports = {
       // 原始文件 -> 匹配rule,loader 编译,代码转换 -> loader 处理完成后的结果,交给 webpack进行打包 -> 输出最终文件 bundle.js
       {
         test: /\.css$/,
+        include: /src/, //应用于src目录下
+        exclude: /node_modules/, //排除某些文件或目录
         // 从后向前处理，处理完成后交由 webpack打包合并到 bundle.js中
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       // 解析.ts
       {
         test: /\.ts$/,
+        include: /src/, //应用于src目录下
+        exclude: /node_modules/, //排除某些文件或目录
         use: ["ts-loader"],
       },
       // 解析.js
       {
         test: /\.m?js$/,
-        exclude: /node_modules/,
+        include: /src/, //应用于src目录下
+        exclude: /node_modules/, //排除某些文件或目录
         use: {
           loader: "babel-loader",
           options: {
@@ -54,11 +74,15 @@ module.exports = {
       // 解析.vue
       {
         test: /\.vue$/,
+        include: /src/, //应用于src目录下
+        exclude: /node_modules/, //排除某些文件或目录
         use: ["vue-loader"],
       },
       // 解析 .custom 自定义文件
       {
         test: /\.custom$/,
+        include: /src/, //应用于src目录下
+        exclude: /node_modules/, //排除某些文件或目录
         use: ["./loaders/custom-loader.js"],
       },
     ],
@@ -72,7 +96,20 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     // 自定义plugin，压缩代码
-    new dirToZip(),
+    // new dirToZip(),
+    // 分离css
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+    }),
+    // gzip
+    new CompressionWebpackPlugin({
+      filename: "[path][base].gz", //[file] 会被替换成原始资源。[path] 会被替换成原始资源的路径， [query] 会被替换成查询字符串
+      algorithm: "gzip", //压缩成gzip
+      //所有匹配该正则的资源都会被处理。默认值是全部资源。
+      test: new RegExp("\\.(" + productionGzipExtensions.join("|") + ")$"),
+      threshold: 1024, //只有大小大于该值的资源会被处理。单位是 bytes。默认值是 0。
+      minRatio: 0.8, //只有压缩率小于这个值的资源才会被处理。默认值是 0.8。
+    }),
   ],
   // 配置模块如何解析
   resolve: {
