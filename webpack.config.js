@@ -22,13 +22,14 @@ module.exports = {
     // 打包输出路径
     path: __dirname + "/dist",
     // 文件名
-    filename: "js/[contenthash].js",
+    filename: "js/[name].js",
     // 在生成文件之前清空 output 目录
     clean: true,
   },
-  cache: false,
+  cache: true,
   // 分包的最小单位是module
   optimization: {
+    chunkIds: "size",
     splitChunks: {
       chunks: "all", //默认为async，可选all或者initial
       maxSize: 3 * 1024, //控制包的最大字节数
